@@ -1,7 +1,9 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-
 admin.initializeApp();
+import * as express from 'express';
+import * as cors from 'cors';
+
 
 export const basicHTTP = functions.https.onRequest((request, response) => {
     var name;
@@ -16,3 +18,16 @@ export const basicHTTP = functions.https.onRequest((request, response) => {
         response.status(422).send(`Query parameter name is ${name}, please insert a name!`);
     }
 })
+
+const app = express();
+app.use(cors({origin:true}))
+
+app.get('cat', (request, response) => {
+    response.send('CAT');
+})
+
+app.get('dog', (request, response) => {
+    response.send('DOG');
+})
+
+export const api = functions.https.onRequest(app);
