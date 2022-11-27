@@ -1,6 +1,9 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-admin.initializeApp();
+var serviceAccount = require("..service-account.json");
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+});
 import * as express from 'express';
 import * as cors from 'cors';
 
