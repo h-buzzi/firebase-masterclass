@@ -15,3 +15,22 @@ export const gameCount = functions.firestore.document('games/{gameId}').onCreate
         gameCount: userData.gameCount + 1,
     });
 });
+
+export const userTrend = functions.firestore.document('game/{gameId}').onUpdate((snapshot, context) => {
+    const before = snapshot.before.data();
+    const after = snapshot.after.data();
+
+    let trend;
+
+    if(after.score >= before.score){
+        trend = 'You are improving :)'
+    } else {
+        trend = 'You are on the decline :('
+    }
+
+    const userRef = db.doc(`users/${after.uid}`);
+
+    return userRef.update({
+        trend
+    });
+});

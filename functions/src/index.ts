@@ -1,4 +1,4 @@
 export {basicHTTP} from './http';
 export {api} from './http';
 export {createUserRecord} from './auth'
-export {gameCount} from './firestore'
+export {gameCount, userTrend} from './firestore'
